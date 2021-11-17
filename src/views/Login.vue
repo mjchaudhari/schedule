@@ -1,12 +1,21 @@
 <template>
-  <div>
-    <span>Login</span>
-    <v-btn
-      @click="signin"
+  <v-container
+    class="fill-height justify-center bg"
+    fluid
+  >
+    <v-sheet
+      color=""
+      class="transperent text-center justify-center"
     >
-      Sign in
-    </v-btn>
-  </div>
+      <v-btn
+        color="success"
+        @click="signin"
+      >
+        Sign in with Google
+      </v-btn>
+
+    </v-sheet>
+  </v-container>
 </template>
 
 <script>

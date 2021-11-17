@@ -18,7 +18,14 @@ const routes = [
   {
     path: '/home',
     name: 'HOME',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue')
+    component: () => import('../views/Home.vue'),
+    children: [
+      {
+        path: '',
+        name: 'SCHEDULE',
+        component: () => import('../views/Schedule.vue')
+      }
+    ]
   }
 ]
 

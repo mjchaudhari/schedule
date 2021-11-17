@@ -1,6 +1,9 @@
 <template>
   <div>
     <app-header />
+    <v-container>
+      <router-view />
+    </v-container>
   </div>
 </template>
 

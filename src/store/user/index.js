@@ -40,7 +40,7 @@ const mutations = {
 }
 
 const actions = {
-  async signIn1 ({ state, commit }) {
+  async signInPopup ({ state, commit }) {
     if (state.isSignedIn) {
       // do nothing
     }
@@ -104,7 +104,7 @@ const actions = {
       commit('UPDATE_SIGNIN_STATE', false)
     }
   },
-  async signOut ({ commit }) {
+  async signOff ({ commit }) {
     try {
       await signOut(fb.auth)
       commit('UPDATE_SIGNIN_STATE', false)

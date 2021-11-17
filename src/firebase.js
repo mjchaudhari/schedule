@@ -21,7 +21,7 @@ const monitorAuthState = function () {
         sessionStorage.accessToken = user.stsTokenManager.accessToken
         store.commit('user/UPDATE_SIGNIN_STATE', true)
         store.commit('user/UPDATE_USER_DETAILS', u)
-        resolve()
+        resolve(u)
       } else {
         delete sessionStorage.email
         delete sessionStorage.refreshToken

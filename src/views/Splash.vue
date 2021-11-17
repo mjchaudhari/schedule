@@ -7,8 +7,19 @@
     color=""
     class="transperent text-center justify-center"
   >
-    <h4>Hello</h4>
-    <h5>Getting ready in few moments</h5>
+    <h3>Hello</h3>
+    <h5
+      v-if="!requireLogin"
+    >
+      Getting ready in few moments
+    </h5>
+    <v-btn
+      v-if="requireLogin"
+      color="success"
+      @click="signin"
+    >
+      Sign in with Google
+    </v-btn>
   </v-sheet>
 </v-container>
 </template>
@@ -20,25 +31,28 @@ export default {
   name: 'Splash',
   components: {},
   data () {
-    return {}
+    return {
+      requireLogin: false
+    }
   },
   computed: {
     ...mapState({
     }),
     ...mapGetters({})
   },
-  mounted () {
+  async mounted () {
     try {
-      const result = fb.monitorAuthState()
+      const result = await fb.monitorAuthState()
       console.log('user logged in', result)
-      setTimeout(() => {
-        this.$router.push({ name: 'HOME' })
-      }, 3000)
+      if (result) {
+        this.requireLogin = false
+        this.$router.push({ name: 'SCHEDULE' })
+      } else {
+        this.requireLogin = true
+      }
     } catch (e) {
       console.log(e)
-      setTimeout(() => {
-        this.$router.push({ name: 'LOGIN' })
-      }, 3000)
+      this.requireLogin = true
     }
   },
   methods: {

@@ -31,7 +31,11 @@
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>Log Off</v-list-item-title>
+            <v-list-item-title
+              @click="logOff"
+            >
+              Log Off
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -40,7 +44,6 @@
       app
       dark
       color="primary"
-      dense
       fixed
     >
       <!-- <v-app-bar-nav-icon
@@ -73,7 +76,6 @@ export default {
   },
   computed: {
     ...mapState({
-      data: state => state.data
     }),
     ...mapGetters({
       profile: 'user/profile'
@@ -84,12 +86,18 @@ export default {
       .then(() => {
         // okay
       }, () => {
-        this.$router.push({ name: 'LOGIN' })
+        this.$router.push({ name: '' })
       })
   },
   methods: {
     ...mapMutations({}),
-    ...mapActions({})
+    ...mapActions({
+      signout: 'user/signOff'
+    }),
+    async logOff () {
+      await this.signout()
+      this.$router.push({ name: 'SPLASH' })
+    }
   }
 }
 </script>
