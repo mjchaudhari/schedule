@@ -89,7 +89,7 @@
       :events="events"
       :type="calType"
       ref="calendar"
-      color="primary"
+      color="tertiary"
       class="mt-5"
       interval-count="13"
       first-interval="9"

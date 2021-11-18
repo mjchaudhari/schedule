@@ -14,18 +14,18 @@ const opts = {
     },
     themes: {
       light: {
-        primary: '#f6bd60',
-        secondary: '#f7ede2',
-        tertiary: '#f5cac3',
-        accent: '#ff8500',
-        error: '#f07167',
-        warning: '#f07167',
-        info: '#0078D7',
-        success: '#84a59d',
+        primary: '#99c1de',
+        secondary: '#eddcd2',
+        tertiary: '#c5dedd',
+        accent: '#f29f5e',
+        error: '#ee6055',
+        warning: '#ff9b85',
+        info: '#99a2de',
+        success: '#c5dedd',
         dark: '#343a40',
         grey: '#495057',
-        lightgrey: '#ced4da',
-        white: '#f8f9fa'
+        lightgrey: '#fff1e6',
+        white: '#f0efeb'
       }
     }
   }
