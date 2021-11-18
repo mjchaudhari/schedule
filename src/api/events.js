@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import fb from '../firebase'
-import { collection, query, where, getDocs, doc, updateDoc, addDoc } from 'firebase/firestore'
+import { collection, query, where, getDocs, doc, updateDoc, addDoc, deleteDoc } from 'firebase/firestore'
 
 /**
  * Get events
@@ -74,7 +74,19 @@ async function saveEvent (data) {
   })
   return p
 }
+async function cancelEvent (id) {
+  const p = new Promise((resolve, reject) => {
+    deleteDoc(doc(fb.db, 'events', id))
+      .then(() => {
+        resolve()
+      }, () => {
+        reject(new Error('Can not delete event'))
+      })
+  })
+  return p
+}
 export default {
   getEvents,
-  saveEvent
+  saveEvent,
+  cancelEvent
 }

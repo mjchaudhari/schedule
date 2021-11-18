@@ -3,10 +3,24 @@
     class="pa-0"
     column
   >
+    <v-snackbar
+      v-model="showSnack"
+      :timeout="snackTimeOut"
+      bottom
+      :color="snackType"
+    >
+      <span>{{snackMessage}}</span>
+    </v-snackbar>
     <v-card-title
       class="pt-2 mb-2"
     >
-      <span>{{ new Date().toISOString() | formatDate }}</span>
+      <v-btn
+        text
+        color="grey"
+        @click="setToday"
+      >
+        Today: {{ new Date().toISOString() | formatDate }}
+      </v-btn>
       <v-spacer />
       <span class="body-2 mr-2">{{ calType | iniCap }}</span>
       <v-menu offset-y>
@@ -92,6 +106,7 @@
       :event-details="selectedEvent"
       @cancel="eventDialogCancel"
       @ok="eventDialogOk"
+      @delete="eventDelete"
     />
   </v-sheet>
 </template>
@@ -112,7 +127,11 @@ export default {
       viewStart: '',
       viewEnd: '',
       showEventDialog: false,
-      selectedEvent: null
+      selectedEvent: null,
+      showSnack: false,
+      snackMessage: '',
+      snackType: '',
+      snackTimeOut: '3000'
     }
   },
   computed: {
@@ -130,13 +149,17 @@ export default {
     ...mapMutations({}),
     ...mapActions({
       fetchEvents: 'schedule/getEvents',
-      saveEvent: 'schedule/saveEvent'
+      saveEvent: 'schedule/saveEvent',
+      cancelEvent: 'schedule/cancelEvent'
     }),
     prev () {
       this.$refs.calendar.prev()
     },
     next () {
       this.$refs.calendar.next()
+    },
+    setToday () {
+      this.focus = ''
     },
     dateRangeChanged ({ start, end }) {
       this.viewStart = start.date
@@ -177,10 +200,31 @@ export default {
       try {
         await this.saveEvent(data)
         await this.fetchEvents({ start: this.viewStart, end: this.viewEnd })
+        this.showSnack = true
+        this.snackMessage = 'Event saved'
+        this.snackType = 'success'
       } catch (error) {
         console.log(error)
+        this.showSnack = true
+        this.snackMessage = 'Failed to save event'
+        this.snackType = 'error'
       }
       this.selectedEvent = null
+    },
+    async eventDelete () {
+      try {
+        this.showEventDialog = false
+        await this.cancelEvent(this.selectedEvent.id)
+        await this.fetchEvents({ start: this.viewStart, end: this.viewEnd })
+        this.showSnack = true
+        this.snackMessage = 'Event cancelled'
+        this.snackType = 'warning'
+      } catch (error) {
+        console.log('Event delected')
+        this.showSnack = true
+        this.snackMessage = 'Failed to cancel event'
+        this.snackType = 'error'
+      }
     }
   }
 }

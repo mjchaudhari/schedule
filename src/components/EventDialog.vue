@@ -1,14 +1,17 @@
 <template>
   <v-dialog
     v-model="isOpen"
-    fullscreen
+    :fullscreen="canEdit"
+    persistent
   >
-    <v-form ref="form">
-      <v-card
-        class=""
-      >
+    <v-card
+      v-if="canEdit"
+      class=""
+    >
+      <v-form ref="form">
         <v-toolbar
-          color="secondary"
+          dark
+          color="primary"
           dense
           class
         >
@@ -54,13 +57,20 @@
             {{ errorDesc }}
           </v-alert>
         </div>
-        <v-row
+        <v-card-actions
           class="justify-end pa-5"
         >
+          <v-btn
+            color="grey"
+            depressed
+            dark
+            @click="eventDelete"
+          >
+            Delete
+          </v-btn>
           <v-spacer></v-spacer>
           <v-btn
-            v-if="canEdit"
-            color="primary"
+            color="success"
             depressed
             @click="ok"
           >
@@ -68,15 +78,41 @@
           </v-btn>
 
           <v-btn
-            v-if="canEdit"
-            color="warn"
+            color="warning"
             depressed
             @click="cancel"
           >
             Cancel
           </v-btn>
-          <v-btn
-            v-if="!canEdit"
+        </v-card-actions>
+      </v-form>
+    </v-card>
+    <v-card
+      v-if="!canEdit"
+    >
+      <v-card-title>
+        {{ evt.displayDate }}
+      </v-card-title>
+      <v-card-subtitle>
+        {{ evt.startTime }} - {{ evt.endTime }} by {{ evt.organizer || user.name}}
+      </v-card-subtitle>
+      <v-card-text>
+        <!-- read only -->
+        <div
+          class="pa-5"
+        >
+          <p>
+            <span class="font-weight-bold">Name:</span>
+            {{ evt.name || ' - '}}
+          </p>
+          <p>
+            <span class="font-weight-bold">Venue:</span>
+            {{ evt.venue || '-' }}
+          </p>
+        </div>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
             color="primary"
             text
             depressed
@@ -84,9 +120,8 @@
           >
             Ok
           </v-btn>
-        </v-row>
-      </v-card>
-    </v-form>
+      </v-card-actions>
+    </v-card>
   </v-dialog>
 </template>
 
@@ -195,6 +230,9 @@ export default {
     cancel () {
       this.evt = {}
       this.$emit('cancel')
+    },
+    eventDelete () {
+      this.$emit('delete')
     }
   }
 }

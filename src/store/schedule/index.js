@@ -55,6 +55,13 @@ const actions = {
     } catch (error) {
       console.log(error)
     }
+  },
+  async cancelEvent ({ commit }, id) {
+    try {
+      await apiEvents.cancelEvent(id)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
