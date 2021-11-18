@@ -5,9 +5,13 @@
 >
   <v-sheet
     color=""
-    class="transperent text-center justify-center"
+    class="transperent align-center justify-center d-flex flex-column"
   >
-    <h3>Hello</h3>
+    <img
+      src="/img/icons/apple-touch-icon-120x120.png"
+      alt=""
+      class="ma-5"
+    >
     <h5
       v-if="!requireLogin"
     >
@@ -15,7 +19,7 @@
     </h5>
     <v-btn
       v-if="requireLogin"
-      color="success"
+      color="accent"
       @click="signin"
     >
       Sign in with Google
