@@ -8,7 +8,7 @@
     class="transperent align-center justify-center d-flex flex-column"
   >
     <img
-      src="/img/icons/apple-touch-icon-120x120.png"
+      src="img/icons/apple-touch-icon-120x120.png"
       alt=""
       class="ma-5"
     >
