@@ -32,7 +32,15 @@ const mutations = {
 
 const actions = {
   async getEvents ({ commit, state }, data) {
-    const result = await apiEvents.getEvents(new Date(data.start), new Date(data.end))
+    const start = new Date(data.start)
+    start.setHours(0)
+    start.setMinutes(0)
+    start.setSeconds(0)
+    const end = new Date(data.end)
+    end.setHours(23)
+    end.setMinutes(59)
+    end.setSeconds(59)
+    const result = await apiEvents.getEvents(start, end)
     commit('UPDATE_EVENTS', result)
     return result
   },

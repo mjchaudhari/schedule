@@ -10,6 +10,7 @@ import { collection, query, where, getDocs, doc, updateDoc, addDoc } from 'fireb
 async function getEvents (start, end) {
   const evts = []
   const p = new Promise((resolve, reject) => {
+    console.log(`get events between ${start} - ${end}`)
     const q = query(collection(fb.db, 'events'), where('start', '>=', start), where('start', '<=', end))
 
     getDocs(q)
